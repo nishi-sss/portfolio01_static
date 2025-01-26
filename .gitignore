@@ -1,0 +1,20 @@
+# memo 構成詳細開発用メモ
+memo.md
+
+# フロントエンド
+frontend/node_modules/
+frontend/build/
+frontend/.env
+
+# バックエンド
+backend/.env
+backend/__pycache__/
+backend/static/
+backend/.db
+
+# 一般的な無視ファイル
+.DS_Store
+.env
+*.log
+*.pyc
+
