@@ -1,5 +1,3 @@
-# ルート定義とAPIの処理（S3から画像を取得）
-
 from flask import Blueprint, jsonify
 import boto3
 import os
@@ -8,7 +6,7 @@ main = Blueprint('main', __name__)
 
 @main.route('/api/photos', methods=['GET'])
 def get_photos():
-    """S3から画像URLを取得して返す"""
+    """S3から画像URLを取得してフロントに返す"""
     s3 = boto3.client(
         's3',
         aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
@@ -27,4 +25,3 @@ def get_photos():
         return jsonify({'error': str(e)}), 500
 
     return jsonify({'photos': photos})
-
