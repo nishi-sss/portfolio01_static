@@ -17,4 +17,7 @@ backend/.db
 .env
 *.log
 *.pyc
+# OSやエディタの一時ファイル
+Thumbs.db
+.vscode/
 

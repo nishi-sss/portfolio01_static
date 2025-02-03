@@ -1,11 +1,14 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages and Heroku
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: heroku-deproy
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -17,6 +20,23 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         run: npm run deploy
 
+  deploy-to-heroku:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          echo "machine api.heroku.com login ${{ secrets.HEROKU_EMAIL }} password ${{ secrets.HEROKU_API_KEY }}" > ~/.netrc
+          echo "machine git.heroku.com login ${{ secrets.HEROKU_EMAIL }} password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
+          heroku git:remote -a floating-basin-23339
+
+      - name: Deploy to Heroku
+        run: |
+          git push heroku main
